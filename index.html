@@ -35,14 +35,17 @@
       padding: 24px;
     }
     .hero {
-      display: grid;
-      grid-template-columns: 1fr;
+      display: flex;
       gap: 24px;
-      padding: 32px;
+      align-items: center;
+      padding: 28px;
       margin-bottom: 24px;
       background: #fff;
       border-radius: 28px;
       box-shadow: 0 20px 60px rgba(15, 23, 42, 0.08);
+    }
+    .hero > div:first-child {
+      flex: 1;
     }
     .hero h1 {
       margin: 0;
@@ -173,10 +176,28 @@
       text-align: center;
       margin-top: 16px;
     }
+    .founder {
+      width: 140px;
+      height: 140px;
+      border-radius: 12px;
+      overflow: hidden;
+      border: 4px solid var(--accent);
+      box-shadow: 0 8px 20px rgba(0, 45, 114, 0.15);
+    }
+    .founder img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
     @media (max-width: 720px) {
       .hero,
       .section {
         padding: 20px;
+      }
+      .founder {
+        width: 120px;
+        height: 120px;
       }
     }
   </style>
@@ -188,6 +209,9 @@
         <p class="badge">Caso Práctico 3 • Habeas Data</p>
         <h1>Violación de datos personales y decisiones clave</h1>
         <p>Interfaz interactiva para analizar el caso de Camilo, votar en tiempo real y observar resultados dinámicos sobre consentimiento, acciones legales y valor económico del dato.</p>
+      </div>
+      <div class="founder" title="Rafael Herreros — Fundador de Uniminuto">
+        <img src="assets/rafael_herreros.jpg" alt="Rafael Herreros — Fundador de Uniminuto" loading="lazy" onerror="this.src='data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 width=%22300%22 height=%22300%22%3E%3Crect fill=%22%23002d72%22 width=%22300%22 height=%22300%22/%3E%3Ctext x=%2250%25%22 y=%2245%25%22 font-size=%2224%22 fill=%22%23ffd100%22 text-anchor=%22middle%22 dominant-baseline=%22middle%22 font-family=%22Arial%22 font-weight=%22bold%22%3ERafael%3C/text%3E%3Ctext x=%2250%25%22 y=%2255%25%22 font-size=%2224%22 fill=%22white%22 text-anchor=%22middle%22 dominant-baseline=%22middle%22 font-family=%22Arial%22%3EHerreros%3C/text%3E%3C/svg%3E'">
       </div>
     </section>
 

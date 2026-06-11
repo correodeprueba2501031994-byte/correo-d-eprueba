@@ -34,13 +34,52 @@
       margin: 0 auto;
       padding: 24px;
     }
+    .topbar {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      align-items: center;
+      gap: 18px;
+      margin-bottom: 20px;
+      padding: 18px 22px;
+      border-radius: 28px;
+      background: radial-gradient(circle at top left, rgba(255,209,0,0.25), transparent 30%),
+                  linear-gradient(90deg, #002d72, #00409d);
+      color: white;
+      box-shadow: 0 20px 60px rgba(0, 45, 114, 0.18);
+    }
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+    }
+    .brand-mark {
+      width: 48px;
+      height: 48px;
+      display: grid;
+      place-items: center;
+      border-radius: 16px;
+      background: white;
+      color: var(--primary);
+      font-size: 1.1rem;
+      font-weight: 800;
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.12);
+    }
+    .brand-text {
+      line-height: 1.15;
+    }
+    .brand-text strong {
+      display: block;
+      font-size: 1rem;
+    }
     .hero {
       display: flex;
+      flex-wrap: wrap;
       gap: 24px;
       align-items: center;
       padding: 28px;
       margin-bottom: 24px;
-      background: linear-gradient(135deg, white 0%, rgba(255,209,0,0.05) 100%);
+      background: linear-gradient(135deg, rgba(0,45,114,0.08) 0%, rgba(255,209,0,0.12) 100%);
       border-radius: 28px;
       border: 1px solid rgba(255,209,0,0.2);
       box-shadow: 0 20px 60px rgba(15, 23, 42, 0.08);
@@ -160,9 +199,21 @@
       border-color: var(--primary);
       box-shadow: 0 8px 24px rgba(0,45,114,0.15);
     }
+    .option-button.selected {
+      background: linear-gradient(135deg, rgba(255,209,0,0.18), #ffffff 90%);
+      border-color: var(--accent);
+      color: var(--primary);
+      box-shadow: 0 0 0 4px rgba(255,209,0,0.12);
+    }
     .option-button:disabled {
       cursor: not-allowed;
-      opacity: 0.55;
+      opacity: 0.65;
+    }
+    .option-note {
+      margin: 12px 0 0;
+      font-size: 0.95rem;
+      color: #1f2937;
+      font-weight: 600;
     }
     .stats {
       display: grid;
@@ -295,6 +346,16 @@
 </head>
 <body>
   <div class="page">
+    <div class="topbar">
+      <div class="brand">
+        <div class="brand-mark">U</div>
+        <div class="brand-text">
+          <span>Uniminuto</span>
+          <strong>Habeas Data Interactivo</strong>
+        </div>
+      </div>
+      <p>Votación pública y resultados en vivo para un caso práctico de protección de datos.</p>
+    </div>
     <section class="hero">
       <div>
         <p class="badge">Caso Práctico 3 • Habeas Data</p>
@@ -302,7 +363,7 @@
         <p>Interfaz interactiva para analizar el caso de Camilo, votar en tiempo real y observar resultados dinámicos sobre consentimiento, acciones legales y valor económico del dato.</p>
       </div>
       <div class="founder" title="Padre Rafael García Herreros — Fundador de Uniminuto">
-        <img src="https://minutodedios.org/img/biographies/biografia-padre-rafael-4.webp" alt="Padre Rafael García Herreros — Fundador de Uniminuto" loading="lazy" onerror="this.src='data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 width=%22300%22 height=%22300%22%3E%3Crect fill=%22%23002d72%22 width=%22300%22 height=%22300%22/%3E%3Ctext x=%2250%25%22 y=%2245%25%22 font-size=%2224%22 fill=%22%23ffd100%22 text-anchor=%22middle%22 dominant-baseline=%22middle%22 font-family=%22Arial%22 font-weight=%22bold%22%3ERafael%3C/text%3E%3Ctext x=%2250%25%22 y=%2255%25%22 font-size=%2224%22 fill=%22white%22 text-anchor=%22middle%22 dominant-baseline=%22middle%22 font-family=%22Arial%22%3EHerreros%3C/text%3E%3C/svg%3E'">
+        <img src="https://minutodedios.org/img/biographies/biografia-padre-rafael-4.webp" alt="Padre Rafael García Herreros — Fundador de Uniminuto" loading="lazy" onerror="this.src='data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 300 300%22%3E%3Crect fill=%23002d72 width=%22300%22 height=%22300%22/%3E%3Ccircle cx=%22150%22 cy=%22105%22 r=%2270%22 fill=%23ffd100 opacity=%220.17%22/%3E%3Cpath d=%22M110 190c0-38 30-78 70-78s70 39 70 78c0 22-25 40-56 40s-56-18-56-40z%22 fill=%23ffffff opacity=%220.55%22/%3E%3Ctext x=%22150%22 y=%22210%22 font-size=%2222%22 fill=%22white%22 text-anchor=%22middle%22 font-family=%22Inter,sans-serif%22%3EPadre Rafael%3C/text%3E%3C/svg%3E'">
       </div>
     </section>
 
@@ -467,6 +528,7 @@
       const pollContainer = document.getElementById('poll');
       pollContainer.innerHTML = '';
       questions.forEach((question, qi) => {
+        const total = totalVotes(question);
         const questionCard = document.createElement('div');
         questionCard.className = 'poll-question';
 
@@ -482,8 +544,22 @@
         info.style.margin = '0';
         info.style.fontSize = '0.95rem';
         info.style.color = '#64748b';
-        info.textContent = `Votos registrados: ${totalVotes(question)} de ${VOTE_LIMIT}`;
+        info.textContent = `Votos registrados: ${total} de ${VOTE_LIMIT}`;
         questionCard.appendChild(info);
+
+        if (question.userVote !== null) {
+          const chosen = document.createElement('p');
+          chosen.className = 'option-note';
+          chosen.innerHTML = `Tu elección: <strong>${question.options[question.userVote]}</strong>`;
+          questionCard.appendChild(chosen);
+        }
+
+        if (total >= VOTE_LIMIT && question.userVote === null) {
+          const limitNote = document.createElement('p');
+          limitNote.className = 'option-note';
+          limitNote.textContent = 'Este cuestionario ya alcanzó el límite de votos. Gracias por tu interés.';
+          questionCard.appendChild(limitNote);
+        }
 
         const options = document.createElement('div');
         options.className = 'options';
@@ -493,7 +569,12 @@
           button.type = 'button';
           button.className = 'option-button';
           button.textContent = option;
-          button.disabled = question.userVote !== null || totalVotes(question) >= VOTE_LIMIT;
+          const disabled = total >= VOTE_LIMIT || question.userVote !== null;
+          button.disabled = disabled;
+          if (question.userVote === oi) {
+            button.classList.add('selected');
+            button.innerHTML = `${option} <span style="float:right; font-weight: 700;">✔</span>`;
+          }
           button.onclick = () => vote(qi, oi);
           options.appendChild(button);
         });
@@ -563,18 +644,38 @@
       });
     }
 
+    function createQrImage(url) {
+      const img = document.createElement('img');
+      img.alt = 'QR para votar desde el móvil';
+      img.width = 180;
+      img.height = 180;
+      img.loading = 'lazy';
+      img.src = `https://api.qrserver.com/v1/create-qr-code/?size=180x180&data=${encodeURIComponent(url)}`;
+      img.style.borderRadius = '18px';
+      img.style.border = '1px solid rgba(0,45,114,0.08)';
+      return img;
+    }
+
     function renderQRCode() {
       const qrContainer = document.getElementById('qr-code');
       qrContainer.innerHTML = '';
-      const qr = new QRious({
-        element: document.createElement('canvas'),
-        value: window.location.href,
-        size: 180,
-        level: 'H',
-        background: '#ffffff',
-        foreground: '#1f2937'
-      });
-      qrContainer.appendChild(qr.element);
+      if (window.QRious) {
+        try {
+          const qr = new QRious({
+            element: document.createElement('canvas'),
+            value: window.location.href,
+            size: 180,
+            level: 'H',
+            background: '#ffffff',
+            foreground: '#1f2937'
+          });
+          qrContainer.appendChild(qr.element);
+          return;
+        } catch (error) {
+          console.warn('QRious no pudo generar el QR:', error);
+        }
+      }
+      qrContainer.appendChild(createQrImage(window.location.href));
     }
 
     function init() {

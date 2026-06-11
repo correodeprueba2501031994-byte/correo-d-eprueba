@@ -26,7 +26,7 @@
     body {
       margin: 0;
       min-height: 100vh;
-      background: linear-gradient(180deg, #eef2ff 0%, #ffffff 55%);
+      background: linear-gradient(135deg, #f3f6ff 0%, #e8f4ff 50%, #fff8e8 100%);
       color: #111827;
     }
     .page {
@@ -40,8 +40,9 @@
       align-items: center;
       padding: 28px;
       margin-bottom: 24px;
-      background: #fff;
+      background: linear-gradient(135deg, white 0%, rgba(255,209,0,0.05) 100%);
       border-radius: 28px;
+      border: 1px solid rgba(255,209,0,0.2);
       box-shadow: 0 20px 60px rgba(15, 23, 42, 0.08);
     }
     .hero > div:first-child {
@@ -60,13 +61,31 @@
     .section {
       margin-bottom: 24px;
       padding: 28px;
-      background: #fff;
+      background: linear-gradient(135deg, #fff 0%, rgba(0,45,114,0.02) 100%);
       border-radius: 24px;
+      border: 1px solid rgba(0,45,114,0.08);
       box-shadow: 0 16px 40px rgba(15, 23, 42, 0.06);
+      transition: all 0.3s ease;
+    }
+    .section:hover {
+      box-shadow: 0 24px 56px rgba(15, 23, 42, 0.1);
     }
     .section h2 {
       margin-top: 0;
       font-size: 1.5rem;
+      color: var(--primary);
+      position: relative;
+      display: inline-block;
+    }
+    .section h2::after {
+      content: '';
+      position: absolute;
+      bottom: -8px;
+      left: 0;
+      width: 60px;
+      height: 3px;
+      background: var(--accent);
+      border-radius: 999px;
     }
     .section p,
     .section li {
@@ -80,8 +99,18 @@
     .card {
       padding: 20px;
       border-radius: 18px;
-      background: #fff;
+      background: linear-gradient(135deg, #fff 0%, rgba(255,209,0,0.03) 100%);
       border: 1px solid rgba(0,45,114,0.06);
+      transition: all 0.3s ease;
+    }
+    .card:hover {
+      transform: translateY(-4px);
+      border-color: var(--accent);
+      box-shadow: 0 12px 32px rgba(255,209,0,0.15);
+    }
+    .card h3 {
+      color: var(--primary);
+      margin-top: 0;
     }
     .poll {
       display: grid;
@@ -101,42 +130,89 @@
     }
     .option-button {
       width: 100%;
-      border: 1px solid rgba(0,45,114,0.12);
+      border: 2px solid rgba(0,45,114,0.12);
       border-radius: 14px;
       background: white;
       color: var(--primary);
       padding: 16px;
       text-align: left;
       cursor: pointer;
-      transition: transform 0.18s ease, border-color 0.18s ease, background 0.18s ease;
+      transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+      font-weight: 500;
+      position: relative;
+      overflow: hidden;
+    }
+    .option-button::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(255,209,0,0.3), transparent);
+      transition: left 0.5s ease;
+    }
+    .option-button:hover::before {
+      left: 100%;
     }
     .option-button:hover {
-      transform: translateY(-1px);
+      transform: translateX(8px) translateY(-2px);
       border-color: var(--primary);
+      box-shadow: 0 8px 24px rgba(0,45,114,0.15);
     }
     .option-button:disabled {
       cursor: not-allowed;
-      opacity: 0.65;
+      opacity: 0.55;
     }
     .stats {
       display: grid;
       gap: 16px;
     }
     .stat-bar {
-      height: 12px;
+      height: 16px;
       border-radius: 999px;
       overflow: hidden;
-      background: #e2e8f0;
+      background: rgba(0,45,114,0.06);
+      position: relative;
     }
     .stat-fill {
       height: 100%;
       border-radius: 999px;
       background: linear-gradient(90deg, var(--primary), #3b5bd6);
-      transition: width 0.4s ease;
+      transition: width 0.8s cubic-bezier(0.34, 1.56, 0.64, 1);
+      position: relative;
+      box-shadow: 0 0 12px rgba(0,45,114,0.3);
+    }
+    .stat-fill::after {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: linear-gradient(90deg, transparent, rgba(255,255,255,0.4), transparent);
+      animation: shimmer 2s infinite;
+    }
+    @keyframes shimmer {
+      0% { transform: translateX(-100%); }
+      100% { transform: translateX(100%); }
+    }
+    .stat-item:nth-child(2) .stat-fill {
+      background: linear-gradient(90deg, #ffd100, #ffed4e);
+    }
+    .stat-item:nth-child(3) .stat-fill {
+      background: linear-gradient(90deg, #1f2937, #374151);
     }
     .stat-item {
       display: grid;
       gap: 8px;
+      padding: 12px;
+      border-radius: 12px;
+      background: rgba(0,45,114,0.02);
+      transition: all 0.3s ease;
+    }
+    .stat-item:hover {
+      background: rgba(255,209,0,0.08);
     }
     .stat-label {
       display: flex;
@@ -144,6 +220,18 @@
       gap: 12px;
       font-size: 0.95rem;
       color: #334155;
+      font-weight: 500;
+    }
+    .stat-badge {
+      display: inline-flex;
+      gap: 4px;
+      align-items: center;
+      padding: 4px 10px;
+      border-radius: 999px;
+      background: var(--primary);
+      color: white;
+      font-size: 0.85rem;
+      font-weight: 700;
     }
     .badge {
       display: inline-flex;
@@ -190,15 +278,18 @@
       object-fit: cover;
       display: block;
     }
-    @media (max-width: 720px) {
-      .hero,
-      .section {
-        padding: 20px;
+    @keyframes fadeInUp {
+      from {
+        opacity: 0;
+        transform: translateY(20px);
       }
-      .founder {
-        width: 120px;
-        height: 120px;
+      to {
+        opacity: 1;
+        transform: translateY(0);
       }
+    }
+    .section {
+      animation: fadeInUp 0.6s ease-out;
     }
   </style>
 </head>
@@ -210,8 +301,8 @@
         <h1>Violación de datos personales y decisiones clave</h1>
         <p>Interfaz interactiva para analizar el caso de Camilo, votar en tiempo real y observar resultados dinámicos sobre consentimiento, acciones legales y valor económico del dato.</p>
       </div>
-      <div class="founder" title="Rafael Herreros — Fundador de Uniminuto">
-        <img src="assets/rafael_herreros.jpg" alt="Rafael Herreros — Fundador de Uniminuto" loading="lazy" onerror="this.src='data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 width=%22300%22 height=%22300%22%3E%3Crect fill=%22%23002d72%22 width=%22300%22 height=%22300%22/%3E%3Ctext x=%2250%25%22 y=%2245%25%22 font-size=%2224%22 fill=%22%23ffd100%22 text-anchor=%22middle%22 dominant-baseline=%22middle%22 font-family=%22Arial%22 font-weight=%22bold%22%3ERafael%3C/text%3E%3Ctext x=%2250%25%22 y=%2255%25%22 font-size=%2224%22 fill=%22white%22 text-anchor=%22middle%22 dominant-baseline=%22middle%22 font-family=%22Arial%22%3EHerreros%3C/text%3E%3C/svg%3E'">
+      <div class="founder" title="Padre Rafael García Herreros — Fundador de Uniminuto">
+        <img src="https://minutodedios.org/img/biographies/biografia-padre-rafael-4.webp" alt="Padre Rafael García Herreros — Fundador de Uniminuto" loading="lazy" onerror="this.src='data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 width=%22300%22 height=%22300%22%3E%3Crect fill=%22%23002d72%22 width=%22300%22 height=%22300%22/%3E%3Ctext x=%2250%25%22 y=%2245%25%22 font-size=%2224%22 fill=%22%23ffd100%22 text-anchor=%22middle%22 dominant-baseline=%22middle%22 font-family=%22Arial%22 font-weight=%22bold%22%3ERafael%3C/text%3E%3Ctext x=%2250%25%22 y=%2255%25%22 font-size=%2224%22 fill=%22white%22 text-anchor=%22middle%22 dominant-baseline=%22middle%22 font-family=%22Arial%22%3EHerreros%3C/text%3E%3C/svg%3E'">
       </div>
     </section>
 
@@ -226,6 +317,32 @@
         <div class="card">
           <h3>Objetivo</h3>
           <p>Construir una experiencia interactiva que permita a un público votar sobre decisiones críticas del caso y visualizar el impacto estadístico de cada alternativa.</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="section">
+      <h2>Sobre el Fundador</h2>
+      <div class="grid-2">
+        <div class="card">
+          <h3>Padre Rafael García Herreros</h3>
+          <p><strong>Cúcuta, 17 de enero de 1909 — Bogotá, 24 de noviembre de 1992</strong></p>
+          <p>Sacerdote eudista, evangelizador y transformador social que dedicó su vida a crear oportunidades educativas y sociales para las comunidades vulnerables de Colombia.</p>
+          <p><strong>Logros principales:</strong></p>
+          <ul style="margin: 8px 0; font-size: 0.9rem;">
+            <li>Fundó 18 colegios y 7 jardines infantiles en la periferia de Bogotá</li>
+            <li>Creó la Corporación Universitaria Minuto de Dios en 1988</li>
+            <li>Hoy Uniminuto tiene presencia en 42 municipios y educa a +75.000 alumnos</li>
+            <li>Instituyó el "Banquete del Millón" para financiar obras sociales</li>
+            <li>Apoyó la creación de la Fundación Eudes para enfermos de VIH/SIDA</li>
+          </ul>
+        </div>
+        <div class="card">
+          <h3>Legado en Responsabilidad Social</h3>
+          <p>El Padre Rafael vivió en sencillez absoluta, aplicando la doctrina social de la Iglesia Católica para transformar las estructuras sociales. Su mensaje sigue vigente en la era de los datos personales y la protección de derechos.</p>
+          <p style="margin-top: 16px; padding: 12px; border-left: 4px solid var(--accent); background: rgba(255,209,0,0.1);">
+            <em>"Pobre y generoso, el padre Rafael vivió siempre en desprendimiento de las cosas materiales en favor de los otros y en su compromiso por ayudar a las personas."</em>
+          </p>
         </div>
       </div>
     </section>
@@ -410,7 +527,16 @@
 
           const label = document.createElement('div');
           label.className = 'stat-label';
-          label.innerHTML = `<span>${option}</span><strong>${value} votos • ${percent}%</strong>`;
+          
+          const optionText = document.createElement('span');
+          optionText.textContent = option;
+          label.appendChild(optionText);
+
+          const badge = document.createElement('span');
+          badge.className = 'stat-badge';
+          badge.innerHTML = `<strong>${value}</strong> • ${percent}%`;
+          label.appendChild(badge);
+          
           item.appendChild(label);
 
           const bar = document.createElement('div');
@@ -425,10 +551,11 @@
         });
 
         const summary = document.createElement('p');
-        summary.style.margin = '0';
-        summary.style.fontSize = '0.95rem';
+        summary.style.margin = '12px 0 0';
+        summary.style.fontSize = '0.9rem';
         summary.style.color = '#475569';
-        summary.textContent = total === 0 ? 'Sin votos registrados aún.' : `Total de votos: ${total}.`;
+        summary.style.fontWeight = '500';
+        summary.textContent = total === 0 ? '📊 Sin votos registrados aún.' : `📊 Total de votos: ${total} / ${VOTE_LIMIT}`;
 
         card.appendChild(stats);
         card.appendChild(summary);
